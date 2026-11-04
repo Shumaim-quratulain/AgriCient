@@ -1,0 +1,35 @@
+test images: 1171
+accuracy:    0.9530
+
+class                                                  prec    rec     f1     n
+Coconut___Bud_Root_Dropping                           1.000  0.981  0.991   108
+Coconut___Bud_Rot                                     1.000  1.000  1.000    94
+Coconut___Gray_Leaf_Spot                              0.968  0.907  0.936   429
+Coconut___Leaf_Rot                                    0.884  0.961  0.921   334
+Coconut___Stem_Bleeding                               1.000  1.000  1.000   206
+
+macro-F1: 0.9696
+
+worst 5 classes by F1:
+  Coconut___Leaf_Rot                                  0.921
+  Coconut___Gray_Leaf_Spot                            0.936
+  Coconut___Bud_Root_Dropping                         0.991
+  Coconut___Bud_Rot                                   1.000
+  Coconut___Stem_Bleeding                             1.000
+
+most confused pairs (true -> what it answered):
+    40  Coconut___Gray_Leaf_Spot                      -> Coconut___Leaf_Rot
+    13  Coconut___Leaf_Rot                            -> Coconut___Gray_Leaf_Spot
+     2  Coconut___Bud_Root_Dropping                   -> Coconut___Leaf_Rot
+
+crop           classes  images  accuracy
+Coconut              5    1171     0.953
+
+COCONUT confusion matrix (rows = true, columns = answered):
+                        Bud_Root_    Bud_Rot  Gray_Leaf   Leaf_Rot  Stem_Blee
+Bud_Root_Dropping             106          0          0          2          0
+Bud_Rot                         0         94          0          0          0
+Gray_Leaf_Spot                  0          0        389         40          0
+Leaf_Rot                        0          0         13        321          0
+Stem_Bleeding                   0          0          0          0        206
+coconut photos answered as a non-coconut class: 0

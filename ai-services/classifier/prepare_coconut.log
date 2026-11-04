@@ -1,0 +1,16 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Generating train split:   0%|          | 0/5798 [00:00<?, ? examples/s]Generating train split:   9%|▉         | 528/5798 [00:00<00:05, 907.71 examples/s]Generating train split:  33%|███▎      | 1933/5798 [00:00<00:01, 3259.63 examples/s]Generating train split:  52%|█████▏    | 2989/5798 [00:01<00:01, 2726.12 examples/s]Generating train split:  61%|██████    | 3517/5798 [00:01<00:00, 2466.62 examples/s]Generating train split:  67%|██████▋   | 3866/5798 [00:01<00:00, 2459.14 examples/s]Generating train split:  76%|███████▌  | 4394/5798 [00:02<00:00, 1930.96 examples/s]Generating train split:  85%|████████▍ | 4922/5798 [00:02<00:00, 1618.36 examples/s]Generating train split: 100%|██████████| 5798/5798 [00:02<00:00, 2097.55 examples/s]Generating train split: 100%|██████████| 5798/5798 [00:02<00:00, 2127.14 examples/s]
+  0 / 5798
+  500 / 5798
+  1000 / 5798
+  1500 / 5798
+  2000 / 5798
+  2500 / 5798
+  3000 / 5798
+  3500 / 5798
+  4000 / 5798
+  4500 / 5798
+  5000 / 5798
+  5500 / 5798
+downloaded: {'Bud_Root_Dropping': 514, 'Bud_Rot': 470, 'Leaf_Rot': 1673, 'Stem_Bleeding': 1006, 'Gray_Leaf_Spot': 2135} total 5798
+done

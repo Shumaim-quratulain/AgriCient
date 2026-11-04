@@ -1,0 +1,42 @@
+test images: 1351
+accuracy:    0.9489
+
+class                                                  prec    rec     f1     n
+Coconut___Bud_Root_Dropping                           1.000  0.981  0.991   108
+Coconut___Bud_Rot                                     0.989  0.989  0.989    94
+Coconut___Gray_Leaf_Spot                              0.948  0.900  0.923   429
+Coconut___Leaf_Rot                                    0.875  0.967  0.919   334
+Coconut___Stem_Bleeding                               1.000  1.000  1.000   206
+NotCoconut                                            0.994  0.933  0.963   180
+
+macro-F1: 0.9642
+
+worst 5 classes by F1:
+  Coconut___Leaf_Rot                                  0.919
+  Coconut___Gray_Leaf_Spot                            0.923
+  NotCoconut                                          0.963
+  Coconut___Bud_Rot                                   0.989
+  Coconut___Bud_Root_Dropping                         0.991
+
+most confused pairs (true -> what it answered):
+    42  Coconut___Gray_Leaf_Spot                      -> Coconut___Leaf_Rot
+    11  Coconut___Leaf_Rot                            -> Coconut___Gray_Leaf_Spot
+     9  NotCoconut                                    -> Coconut___Gray_Leaf_Spot
+     2  NotCoconut                                    -> Coconut___Leaf_Rot
+     2  Coconut___Bud_Root_Dropping                   -> Coconut___Leaf_Rot
+     1  NotCoconut                                    -> Coconut___Bud_Rot
+     1  Coconut___Gray_Leaf_Spot                      -> NotCoconut
+     1  Coconut___Bud_Rot                             -> Coconut___Gray_Leaf_Spot
+
+crop           classes  images  accuracy
+NotCoconut           1     180     0.933
+Coconut              5    1171     0.951
+
+COCONUT confusion matrix (rows = true, columns = answered):
+                        Bud_Root_    Bud_Rot  Gray_Leaf   Leaf_Rot  Stem_Blee
+Bud_Root_Dropping             106          0          0          2          0
+Bud_Rot                         0         93          1          0          0
+Gray_Leaf_Spot                  0          0        386         42          0
+Leaf_Rot                        0          0         11        323          0
+Stem_Bleeding                   0          0          0          0        206
+coconut photos answered as a non-coconut class: 1

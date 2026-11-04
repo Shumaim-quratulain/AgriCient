@@ -1,0 +1,1466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#173d2a">
+<title>AgriCient — Coconut care</title>
+<style>
+  :root {
+    color-scheme: light;
+    --forest: #173d2a;
+    --forest-2: #24583b;
+    --leaf: #4b8b50;
+    --mint: #e8f1e7;
+    --cream: #f7f7f0;
+    --paper: #fff;
+    --ink: #203128;
+    --muted: #718078;
+    --line: #e3e9e2;
+    --gold: #dba64b;
+    --danger: #b64a3b;
+    --shadow: 0 8px 28px rgba(28, 57, 39, .07);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--cream); color: var(--ink); font: 15px/1.55 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  button, input, select { font: inherit; }
+  button, a { -webkit-tap-highlight-color: transparent; }
+  a { color: inherit; }
+  .topbar { min-height: 68px; background: var(--forest); color: #fff; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 0 max(24px, calc((100vw - 1200px) / 2)); }
+  .brand { display: flex; align-items: center; gap: 11px; text-decoration: none; font-size: 1.12rem; font-weight: 800; letter-spacing: -.03em; }
+  .brand-mark { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 11px; background: #ffffff1a; color: #c6e3aa; }
+  .brand-mark svg { width: 21px; height: 21px; }
+  .brand small { display: block; color: #c6d4c8; font-size: .67rem; font-weight: 500; letter-spacing: .04em; }
+  .nav { display: flex; align-items: center; gap: 8px; }
+  .nav a { color: #d8e3d9; text-decoration: none; padding: 9px 12px; border-radius: 9px; font-size: .88rem; }
+  .nav a:hover, .nav a:focus-visible { background: #ffffff18; color: #fff; outline: none; }
+  .page { width: min(1200px, calc(100% - 40px)); margin: 28px auto 60px; }
+  .hero { position: relative; overflow: hidden; min-height: 215px; padding: 30px 34px; color: #fff; border-radius: 22px; background: linear-gradient(112deg, #173d2a 0%, #24583b 58%, #3b7650 100%); box-shadow: var(--shadow); }
+  .hero::after { content: ""; position: absolute; width: 310px; height: 310px; border: 1px solid #ffffff16; border-radius: 50%; right: 40px; top: -160px; box-shadow: 0 0 0 30px #ffffff08, 0 0 0 66px #ffffff06; pointer-events: none; }
+  .eyebrow { color: #c4dfb6; text-transform: uppercase; letter-spacing: .13em; font-size: .72rem; font-weight: 800; }
+  .hero h1 { position: relative; z-index: 1; max-width: 620px; margin: 8px 0 8px; font-family: Georgia, "Times New Roman", serif; font-size: clamp(2rem, 4.3vw, 3.2rem); line-height: 1.08; letter-spacing: -.035em; font-weight: 500; }
+  .hero p { position: relative; z-index: 1; max-width: 620px; margin: 0; color: #e0ece1; }
+  .hero .hero-link { position: absolute; z-index: 1; right: 34px; bottom: 30px; display: inline-flex; align-items: center; gap: 8px; color: #fff; font-weight: 700; text-decoration: none; }
+  .hero-link:hover { text-decoration: underline; }
+  .stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin: 18px 0 30px; }
+  .stat { background: var(--paper); border: 1px solid var(--line); border-radius: 15px; padding: 17px 20px; display: flex; align-items: center; gap: 13px; }
+  .stat-icon { width: 42px; height: 42px; flex: 0 0 auto; border-radius: 13px; display: grid; place-items: center; background: var(--mint); color: var(--forest-2); font-size: 1.15rem; }
+  .stat strong { display: block; font-size: 1.35rem; line-height: 1.2; }
+  .stat span:last-child { color: var(--muted); font-size: .8rem; }
+  .section { margin-top: 30px; scroll-margin-top: 18px; }
+  .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 14px; margin-bottom: 14px; }
+  .section-heading h2 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: 1.7rem; line-height: 1.2; letter-spacing: -.025em; }
+  .section-heading p { margin: 4px 0 0; color: var(--muted); font-size: .89rem; }
+  .panel { background: var(--paper); border: 1px solid var(--line); border-radius: 17px; padding: 22px; box-shadow: 0 3px 15px rgba(28, 57, 39, .035); }
+  .btn { min-height: 42px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 9px 15px; border: 1px solid transparent; border-radius: 10px; background: var(--forest-2); color: #fff; font-weight: 700; cursor: pointer; transition: background .15s; }
+  .btn:hover:not(:disabled) { background: var(--forest); }
+  .btn:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid #a4c99a; outline-offset: 2px; }
+  .btn:disabled { cursor: not-allowed; opacity: .55; }
+  .btn.secondary { color: var(--forest-2); border-color: #cfdbcf; background: #fff; }
+  .btn.secondary:hover:not(:disabled) { background: var(--mint); }
+  .btn.danger { background: #fff; border-color: #efd8d4; color: var(--danger); }
+  .btn.danger:hover:not(:disabled) { background: #fff4f2; }
+  .icon-btn { display: inline-grid; place-items: center; width: 36px; height: 36px; border: 1px solid var(--line); border-radius: 9px; color: var(--muted); background: #fff; cursor: pointer; }
+  .icon-btn:hover { color: var(--danger); border-color: #efd8d4; }
+  .plots { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+  .plot-card { min-width: 0; padding: 18px; border: 1px solid var(--line); background: #fff; border-radius: 15px; }
+  .plot-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+  .plot-top h3 { overflow-wrap: anywhere; margin: 0; font-size: 1.04rem; }
+  .plot-location { color: var(--muted); font-size: .84rem; margin-top: 3px; }
+  .plot-meta { display: flex; flex-wrap: wrap; gap: 7px; margin: 16px 0 12px; }
+  .chip { display: inline-flex; align-items: center; gap: 5px; padding: 5px 9px; border-radius: 999px; background: #f1f5f0; color: #4f6255; font-size: .74rem; font-weight: 650; }
+  .coordinates { border-top: 1px solid var(--line); padding-top: 11px; color: var(--muted); font-size: .77rem; overflow-wrap: anywhere; }
+  .last-check { margin-top: 8px; color: var(--muted); font-size: .77rem; }
+  .plot-footer { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 13px; }
+  .map-link { color: var(--forest-2); font-size: .82rem; font-weight: 750; text-decoration: none; }
+  .map-link:hover { text-decoration: underline; }
+  .empty-state { padding: 27px 18px; border: 1px dashed #cbd8cb; border-radius: 13px; text-align: center; color: var(--muted); }
+  .empty-state strong { display: block; color: var(--ink); margin-bottom: 4px; }
+  .form-wrap { margin-bottom: 16px; background: #f8faf6; border: 1px solid var(--line); border-radius: 14px; padding: 19px; }
+  .form-wrap h3 { margin: 0 0 14px; font-size: 1rem; }
+  .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; }
+  .field label { display: block; margin-bottom: 5px; color: #53645a; font-size: .81rem; font-weight: 700; }
+  .field input, .field select { width: 100%; min-height: 43px; padding: 9px 11px; border: 1px solid #d5ded4; border-radius: 9px; background: #fff; color: var(--ink); }
+  .field .hint { display: block; margin-top: 4px; color: var(--muted); font-size: .73rem; }
+  .location-row { display: flex; flex-wrap: wrap; align-items: center; gap: 11px; margin: 14px 0; }
+  .location-status, .form-error, .error { font-size: .83rem; color: var(--muted); }
+  .form-error, .error { color: var(--danger); }
+  .form-actions { display: flex; justify-content: flex-end; gap: 9px; margin-top: 8px; }
+  .notice { border-radius: 11px; padding: 12px 14px; background: #f2f6ec; color: #51634d; font-size: .82rem; }
+  .diagnose-grid { display: grid; grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr); gap: 16px; align-items: start; }
+  .upload-panel { background: #f8faf6; border: 1px dashed #b9cdb8; border-radius: 14px; padding: 18px; }
+  .upload-panel label { display: block; margin: 0 0 6px; color: #53645a; font-size: .81rem; font-weight: 700; }
+  .upload-panel select, .upload-panel input[type=file] { width: 100%; min-height: 43px; margin-bottom: 15px; padding: 9px; border: 1px solid #d5ded4; border-radius: 9px; background: #fff; }
+  .upload-panel input[type=file] { border-style: dashed; background: #fff; }
+  #preview { display: none; max-width: 100%; max-height: 240px; object-fit: contain; margin: 0 auto 12px; border-radius: 9px; background: #edf1ed; }
+  #go { width: 100%; }
+  .result-empty { min-height: 220px; display: grid; place-items: center; padding: 24px; border-radius: 13px; background: #f8faf6; color: var(--muted); text-align: center; }
+  .result-empty span { display: block; color: var(--leaf); font-size: 1.8rem; margin-bottom: 6px; }
+  .summary { display: grid; gap: 8px; margin-bottom: 13px; }
+  .badge { display: inline-flex; width: fit-content; padding: 5px 10px; border-radius: 999px; font-size: .75rem; font-weight: 800; letter-spacing: .035em; }
+  .badge.safe, .badge.none { color: #28613a; background: #e4f2e4; }
+  .badge.risk, .badge.watch { color: #795317; background: #fff0d1; }
+  .badge.high, .badge.warning { color: #883c31; background: #fce7e2; }
+  .badge.unknown { color: #56635a; background: #edf0ed; }
+  .big { font-size: 1.35rem; font-weight: 780; }
+  .sub { color: var(--muted); font-size: .87rem; }
+  .row { margin: 10px 0; }
+  .row .top { display: flex; justify-content: space-between; gap: 12px; font-size: .88rem; }
+  .bar { height: 7px; margin-top: 5px; overflow: hidden; border-radius: 9px; background: #e9eee8; }
+  .bar span { display: block; height: 100%; border-radius: inherit; background: var(--leaf); }
+  .bar span.low { background: #b0bdb3; }
+  .advice { margin-top: 13px; padding: 12px 14px; border-radius: 10px; background: #eff6e9; font-size: .87rem; }
+  .alert-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .alert { min-width: 0; padding: 15px; border: 1px solid var(--line); border-left: 4px solid #a7b2a8; border-radius: 12px; background: #fff; }
+  .alert.WARNING { border-left-color: var(--danger); background: #fff9f7; }
+  .alert.WATCH { border-left-color: var(--gold); background: #fffcf5; }
+  .alert.NONE { border-left-color: var(--leaf); }
+  .alert .head { display: flex; align-items: center; justify-content: space-between; gap: 9px; }
+  .alert .site { font-weight: 750; }
+  .alert .why { margin-top: 7px; color: var(--muted); font-size: .77rem; }
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+  th, td { padding: 10px 9px; border-bottom: 1px solid var(--line); text-align: left; white-space: nowrap; }
+  th { color: var(--muted); font-size: .74rem; text-transform: uppercase; letter-spacing: .06em; }
+  .note { margin-top: 12px; color: var(--muted); font-size: .77rem; }
+  [hidden] { display: none !important; }
+  footer { margin: 32px 0 0; padding: 17px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: .77rem; }
+  @media (max-width: 900px) {
+    .plots { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .alert-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 620px) {
+    .topbar { min-height: auto; align-items: flex-start; flex-direction: column; gap: 7px; padding: 13px 18px 9px; }
+    .nav { width: 100%; overflow-x: auto; gap: 2px; }
+    .nav a { flex: 0 0 auto; padding: 7px 9px; font-size: .79rem; }
+    .page { width: calc(100% - 28px); margin-top: 16px; }
+    .hero { min-height: 238px; padding: 24px 21px; border-radius: 17px; }
+    .hero .hero-link { right: 21px; bottom: 19px; left: 21px; }
+    .hero::after { right: -115px; }
+    .stats { gap: 8px; margin: 12px 0 25px; }
+    .stat { align-items: flex-start; flex-direction: column; gap: 8px; padding: 12px; }
+    .stat-icon { width: 34px; height: 34px; }
+    .stat strong { font-size: 1.1rem; }
+    .stat span:last-child { font-size: .72rem; }
+    .section { margin-top: 25px; }
+    .section-heading { align-items: flex-start; flex-direction: column; }
+    .section-heading h2 { font-size: 1.5rem; }
+    .panel { padding: 15px; }
+    .plots, .alert-list, .diagnose-grid { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+    .form-actions { flex-direction: column-reverse; }
+    .form-actions .btn { width: 100%; }
+  }
+.auth-card { max-width: 440px; margin: 0 auto; }
+  .auth-tabs { display: flex; gap: 8px; margin-bottom: 14px; }
+  .auth-tabs button { flex: 1; padding: 9px; border: 1px solid #cfdbcf; border-radius: 10px; background: #fff; color: var(--forest-2); font-weight: 700; cursor: pointer; }
+  .auth-tabs button.active { background: var(--forest-2); color: #fff; }
+  .auth-card .field { margin-bottom: 12px; }
+  .userbar { display: flex; align-items: center; gap: 10px; color: #d8e3d9; font-size: .85rem; }
+  .userbar button { padding: 6px 11px; border: 1px solid #ffffff44; border-radius: 9px; background: transparent; color: #fff; cursor: pointer; }
+  .officer-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+  #officerMap { height: 440px; border-radius: 12px; border: 1px solid var(--line); background: #e9eee8; }
+  .area-list { display: grid; gap: 8px; max-height: 440px; overflow-y: auto; }
+  .area-item { padding: 12px; border: 1px solid var(--line); border-left: 4px solid #a7b2a8; border-radius: 10px; background: #fff; }
+  .area-item.WARNING { border-left-color: var(--danger); background: #fff9f7; }
+  .area-item.WATCH { border-left-color: var(--gold); background: #fffcf5; }
+  .area-item.NONE { border-left-color: var(--leaf); }
+  .area-item .head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .area-item .site { font-weight: 750; }
+  .area-item .why { margin-top: 4px; color: var(--muted); font-size: .78rem; }
+  .officer-summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 14px; }
+  .officer-summary div { padding: 12px; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+  .officer-summary strong { display: block; font-size: 1.3rem; }
+  .officer-summary span { color: var(--muted); font-size: .78rem; }
+  @media (max-width: 900px) { .officer-grid { grid-template-columns: 1fr; } .officer-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+</style>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#home" aria-label="AgriCient coconut care home">
+    <span class="brand-mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 3.5C11 3.5 5 7.2 5 13.2c0 3.2 2.4 5.3 5.3 5.3 6 0 9.7-6 10.2-15Z"/><path d="M3.5 21c3.8-6 7.8-9.2 13.7-12.4"/></svg>
+    </span>
+    <span>AgriCient<small>COCONUT CARE</small></span>
+  </a>
+  <nav class="nav" aria-label="Main navigation">
+    <a class="officer-nav" href="#officerSection" hidden>Area risk</a>
+    <a class="officer-nav" href="#myAlerts" hidden>My alerts</a>
+    <a class="farmer-nav" href="#lands">My lands</a>
+    <a class="farmer-nav" href="#diagnose">Check a palm</a>
+    <a class="farmer-nav" href="#myAlerts">My alerts</a>
+    <a class="farmer-nav" href="#alertsSection">Weather risk</a>
+  </nav>
+  <div class="userbar" id="userBar" hidden><span id="userName"></span><button type="button" id="logoutBtn">Sign out</button></div>
+</header>
+
+<main class="page" id="home">
+  <section class="hero" aria-labelledby="heroTitle">
+    <div class="eyebrow">Your coconut farm, at a glance</div>
+    <h1 id="heroTitle">Healthier palms start with knowing your land.</h1>
+    <p id="heroText">Register your location, save a pin for each coconut land, check palm photos, and see the weather risk at your own lands.</p>
+    <a class="hero-link farmer-nav" href="#lands">Manage my coconut lands <span aria-hidden="true">→</span></a>
+  </section>
+
+  <section class="section" id="authSection">
+    <div class="panel auth-card">
+      <div class="auth-tabs" role="tablist">
+        <button type="button" id="tabLogin" class="active">Sign in</button>
+        <button type="button" id="tabRegister">Create farmer account</button>
+      </div>
+      <form id="authForm" novalidate>
+        <div class="field" id="nameField" hidden><label for="authName">Your name</label><input id="authName" type="text" maxlength="80" autocomplete="name"></div>
+        <div class="field"><label for="authLogin">Email or phone number</label><input id="authLogin" type="text" maxlength="120" autocomplete="username" required></div>
+        <div class="field" id="locationField" hidden>
+          <label for="authLocality">Your location</label>
+          <button class="btn secondary" type="button" id="authUseLocation" style="width:100%"><span aria-hidden="true">⌖</span> Use my current location</button>
+          <input id="authLocality" type="text" maxlength="80" placeholder="Village / town (filled in automatically, you can edit it)" style="margin-top:8px">
+          <span class="hint" id="authLocStatus" role="status">Required. Your browser will ask for permission.</span>
+          <div id="manualLoc" hidden style="margin-top:10px;padding:12px;border:1px dashed #cbd8cb;border-radius:10px;background:#f8faf6">
+            <strong style="font-size:.85rem">Could not get your location automatically? Enter it by hand.</strong>
+            <div class="form-grid" style="margin-top:8px">
+              <div class="field"><label for="manLat">Latitude</label><input id="manLat" type="number" step="any" min="-90" max="90" placeholder="e.g. 13.2597"></div>
+              <div class="field"><label for="manLon">Longitude</label><input id="manLon" type="number" step="any" min="-180" max="180" placeholder="e.g. 76.4781"></div>
+            </div>
+            <span class="hint">Tip: in Google Maps, right-click your place and click the two numbers to copy them.</span>
+            <button class="btn secondary" type="button" id="manUse" style="width:100%;margin-top:8px">Use these coordinates</button>
+          </div>
+          <span class="hint">To show a place name, your approximate coordinates are sent to OpenStreetMap’s Nominatim service. Only the coordinates are sent, and only when you press the button.</span>
+        </div>
+        <div class="field"><label for="authPassword">Password</label><input id="authPassword" type="password" minlength="8" maxlength="72" autocomplete="current-password" required><span class="hint" id="pwHint" hidden>At least 8 characters.</span></div>
+        <div class="field" id="inviteField" hidden><label for="authInvite">Officer invite code (optional)</label><input id="authInvite" type="password" maxlength="100" autocomplete="off" placeholder="Leave empty if you are a farmer"><span class="hint">Agricultural officers: enter the code you were given to register as an officer.</span></div>
+        <div class="form-error" id="authError" role="alert"></div>
+        <button class="btn" type="submit" id="authSubmit" style="width:100%">Sign in</button>
+      </form>
+      <p class="note">Your lands and photo history are tied to your account and are not shown to other farmers.</p>
+    </div>
+  </section>
+
+  <section class="stats needs-auth" aria-label="Farm summary" hidden>
+    <div class="stat"><span class="stat-icon" aria-hidden="true">⌖</span><div><strong id="landCount">0</strong><span>Coconut lands saved</span></div></div>
+    <div class="stat"><span class="stat-icon" aria-hidden="true">◉</span><div><strong id="checkCount">0</strong><span>Photo checks in history</span></div></div>
+  </section>
+
+  <section class="section needs-auth" id="lands" hidden>
+    <div class="section-heading">
+      <div><h2>My coconut lands</h2><p>Save a separate GPS pin for each plot you visit.</p></div>
+      <button class="btn" id="showLandForm" type="button"><span aria-hidden="true">＋</span> Add a land</button>
+    </div>
+    <div class="panel">
+      <form id="landForm" class="form-wrap" hidden>
+        <h3>Add a coconut land</h3>
+        <div class="form-grid">
+          <div class="field"><label for="landName">Land name *</label><input id="landName" name="landName" type="text" maxlength="60" placeholder="e.g. North grove" required></div>
+          <div class="field"><label for="landVillage">Village or locality</label><input id="landVillage" name="landVillage" type="text" maxlength="80" placeholder="e.g. Tiptur"></div>
+          <div class="field"><label for="landArea">Area (acres)</label><input id="landArea" name="landArea" type="number" min="0.01" max="100000" step="0.01" placeholder="e.g. 2.5"></div>
+          <div class="field"><label for="landLatitude">Latitude *</label><input id="landLatitude" name="landLatitude" type="number" min="-90" max="90" step="any" placeholder="Use GPS or enter manually" required><span class="hint">A pin marks one point on this land; it does not map the boundary.</span></div>
+          <div class="field"><label for="landLongitude">Longitude *</label><input id="landLongitude" name="landLongitude" type="number" min="-180" max="180" step="any" placeholder="Use GPS or enter manually" required></div>
+        </div>
+        <div class="location-row">
+          <button class="btn secondary" id="useLocation" type="button"><span aria-hidden="true">⌖</span> Use this land’s current location</button>
+          <span class="location-status" id="locationStatus" role="status">Visit each plot and capture its pin separately.</span>
+        </div>
+        <div class="form-error" id="landFormError" role="alert"></div>
+        <div class="form-actions">
+          <button class="btn secondary" id="cancelLand" type="button">Cancel</button>
+          <button class="btn" type="submit">Save this land</button>
+        </div>
+      </form>
+      <div id="plots" class="plots" aria-live="polite"></div>
+      <div class="notice" style="margin-top:15px">Land pins are saved to your account on the server and are visible only when you are signed in. GPS access requires your permission and a secure connection (HTTPS or localhost). Only a pin is saved—not your live location or the land boundary.</div>
+      <div class="error" id="plotError" role="alert" style="margin-top:8px"></div>
+    </div>
+  </section>
+
+  <section class="section needs-auth" id="diagnose" hidden>
+    <div class="section-heading"><div><h2>Check a coconut palm</h2><p>Take a clear photo of a leaf, bud, or stem for a coconut-focused check.</p></div></div>
+    <div class="panel diagnose-grid">
+      <div class="upload-panel">
+        <label for="diagnosisPlot">Land being checked</label>
+        <select id="diagnosisPlot"><option value="">Choose a saved land</option></select>
+        <label for="file">Photo of a coconut leaf, bud, or stem</label>
+        <input id="file" type="file" accept="image/*" capture="environment">
+        <img id="preview" alt="Preview of selected coconut photo">
+        <button class="btn" id="go" type="button" disabled>Check this photo</button>
+        <div class="error" id="error" role="alert" style="margin-top:9px"></div>
+        <p class="note">The photo is analyzed by the app’s existing model. Choose the land you are visiting so the result is shown with the right plot.</p>
+      </div>
+      <div id="resultBox" aria-live="polite">
+        <div class="result-empty" id="resultEmpty"><div><span aria-hidden="true">♧</span>Select a land and add a clear photo to see a coconut health check.</div></div>
+        <div id="result" hidden></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section needs-auth needs-officer" id="myAlerts" hidden>
+    <div class="section-heading">
+      <div><h2>My alerts <span class="badge warning" id="unreadBadge" hidden></span></h2>
+      <p id="myAlertsIntro">Warnings for your home location and lands, saved automatically when weather risk is high.</p></div>
+    </div>
+    <div id="myAlertList" class="alert-list"></div>
+    <div class="error" id="myAlertError" role="alert" style="margin-top:8px"></div>
+  </section>
+
+  <section class="section needs-auth needs-officer" id="smsSection" hidden>
+    <div class="section-heading">
+      <div><h2 id="smsHeading">Text message alerts</h2><p id="smsIntro">Optional. Get one text when weather risk becomes high at your home or one of your lands.</p></div>
+    </div>
+    <div class="panel">
+      <div id="smsFarmerOnly">
+      <form id="smsForm" novalidate>
+        <div class="field"><label for="smsPhone">Mobile number</label>
+          <input id="smsPhone" type="tel" maxlength="20" placeholder="+919812345678" autocomplete="tel">
+          <span class="hint">Digits only, with country code. Leave empty to remove your number.</span></div>
+        <label style="display:flex;gap:8px;align-items:flex-start;margin:12px 0;color:var(--ink);font-size:.9rem;">
+          <input id="smsConsent" type="checkbox" style="margin-top:4px">
+          <span>I agree to receive text messages from AgriCient about high coconut disease risk. I can turn this off at any time here.</span>
+        </label>
+        <div class="form-error" id="smsError" role="alert"></div>
+        <div class="location-status" id="smsStatus" role="status"></div>
+        <button class="btn" type="submit" id="smsSave">Save</button>
+      </form>
+      </div>
+      <div id="pushBox" style="margin-top:14px;padding-top:14px;border-top:1px solid var(--line)">
+        <strong id="pushTitle">Phone and browser alerts</strong>
+        <p class="note" id="pushText" style="margin:4px 0 10px">Get a notification on this device when weather risk becomes high, even if AgriCient is closed. This needs your permission.</p>
+        <button class="btn secondary" id="pushBtn" type="button">Turn on alerts on this device</button>
+        <div class="location-status" id="pushStatus" role="status" style="margin-top:6px"></div>
+      </div>
+      <p class="note" id="smsNote">Your number is stored on the server and shown only to you. Officers never see it. At the moment text messages are <strong>simulated</strong>: the system records that a text would be sent but no real text leaves the server, because no SMS provider is connected yet. In-app alerts always work.</p>
+    </div>
+  </section>
+
+  <section class="section needs-auth" id="alertsSection" hidden>
+    <div class="section-heading">
+      <div><h2>Weather risk at your lands</h2><p>Based on the last 7 days of weather at your home location and at each saved land’s pin.</p></div>
+      <button class="btn secondary" id="refreshAlerts" type="button">Refresh</button>
+    </div>
+    <div id="alerts" class="alert-list"></div>
+    <div class="error" id="alertError" role="alert" style="margin-top:8px"></div>
+    <p class="note">This is a weather-based risk score (humidity, rain and temperature), not a measured disease outbreak. The 3 day number drives your alerts; the 7 and 14 day numbers are only a rough outlook and are much less certain. The score was built using weather from three coconut areas (Tiptur, Kozhikode, Pollachi), so for other places treat it as a guide and confirm with an agricultural officer.</p>
+  </section>
+
+  <section class="section needs-auth" id="historySection" hidden>
+    <div class="section-heading">
+      <div><h2>Photo check history</h2><p>Previously analyzed photos from this app.</p></div>
+      <button class="btn danger" id="clearHistory" type="button">Clear history</button>
+    </div>
+    <div class="panel">
+      <div class="table-wrap" id="history">Loading checks…</div>
+      <div class="error" id="historyError" role="alert" style="margin-top:8px"></div>
+    </div>
+  </section>
+  <section class="section needs-officer" id="officerSection" hidden>
+    <div class="section-heading">
+      <div><h2>Area risk dashboard</h2><p>Weather-based coconut disease risk for each area (about 1 km) where farmers are registered.</p></div>
+      <button class="btn secondary" id="officerRefresh" type="button">Refresh</button>
+    </div>
+    <div class="officer-summary" id="officerSummary"></div>
+    <div class="officer-grid">
+      <div id="officerMap" role="img" aria-label="Map of area risk"></div>
+      <div class="area-list" id="areaList" aria-live="polite"></div>
+    </div>
+    <div class="error" id="officerError" role="alert" style="margin-top:8px"></div>
+    <p class="note">Areas are shown at about 1 km, never at an individual farmer’s land, and no farmer names or contact details are shown. The score is a weather-based risk index, not a count of confirmed disease cases. The map loads its tiles from OpenStreetMap and its code from unpkg.com.</p>
+  </section>
+
+  <footer>AgriCient Coconut Care · Your account, land pins and photo checks are stored on the server and shown only to you.</footer>
+</main>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script>
+const plotStorageKey = 'agricient.coconutLands.v1';
+const activePlotStorageKey = 'agricient.activeCoconutLand.v1';
+const plotsDiv = document.getElementById('plots');
+const plotError = document.getElementById('plotError');
+const landForm = document.getElementById('landForm');
+const locationStatus = document.getElementById('locationStatus');
+const landLatitude = document.getElementById('landLatitude');
+const landLongitude = document.getElementById('landLongitude');
+const diagnosisPlot = document.getElementById('diagnosisPlot');
+const fileInput = document.getElementById('file');
+const preview = document.getElementById('preview');
+const goBtn = document.getElementById('go');
+const errorBox = document.getElementById('error');
+const resultDiv = document.getElementById('result');
+const resultEmpty = document.getElementById('resultEmpty');
+const historyDiv = document.getElementById('history');
+const formError = document.getElementById('landFormError');
+const $ = (id) => document.getElementById(id);
+let selectedFileUrl = null;
+
+function prettyLabel(label) {
+  return label.replace('___', ' — ').replaceAll('_', ' ');
+}
+
+let plotsData = [];
+let lastCheckByLand = {};
+const tokenKey = 'agricient.token';
+
+function readPlots() {
+  return plotsData;
+}
+
+function authToken() {
+  return localStorage.getItem(tokenKey);
+}
+
+// Adds the sign-in token; a 401 means the session is over, so go back to the sign-in screen.
+async function apiFetch(url, options = {}) {
+  const headers = { ...(options.headers || {}) };
+  const token = authToken();
+  if (token) headers['Authorization'] = 'Bearer ' + token;
+  const response = await fetch(url, { ...options, headers });
+  if (response.status === 401 && token) signedOut('Your session ended. Please sign in again.');
+  return response;
+}
+
+async function problemText(response) {
+  try {
+    const data = await response.json();
+    if (data && data.message) return data.message;
+  } catch (e) { /* not JSON */ }
+  return 'Server returned ' + response.status;
+}
+
+async function loadLands() {
+  const response = await apiFetch('/api/lands');
+  if (!response.ok) throw new Error(await problemText(response));
+  plotsData = (await response.json()).map((l) => ({
+    id: String(l.id), name: l.name, village: l.village || '', area: l.areaAcres,
+    latitude: l.latitude, longitude: l.longitude, accuracy: l.accuracyMeters,
+    lastCheck: lastCheckByLand[String(l.id)] || null
+  }));
+  renderPlots();
+}
+
+function safeCoordinate(value, digits) {
+  return Number(value).toFixed(digits);
+}
+
+function renderPlots() {
+  const plots = readPlots();
+  plotsDiv.replaceChildren();
+  $('landCount').textContent = String(plots.length);
+  const activeId = localStorage.getItem(activePlotStorageKey) || '';
+  diagnosisPlot.replaceChildren();
+  const placeholder = document.createElement('option');
+  placeholder.value = '';
+  placeholder.textContent = plots.length ? 'Choose a saved land' : 'Add a land first';
+  diagnosisPlot.append(placeholder);
+
+  if (plots.length === 0) {
+    const empty = document.createElement('div');
+    empty.className = 'empty-state';
+    empty.style.gridColumn = '1 / -1';
+    const title = document.createElement('strong');
+    title.textContent = 'No coconut lands saved yet';
+    empty.append(title, document.createTextNode('Add a separate GPS pin for each plot you want to track.'));
+    plotsDiv.append(empty);
+  }
+
+  plots.forEach((plot) => {
+    const option = document.createElement('option');
+    option.value = plot.id;
+    option.textContent = plot.name + (plot.village ? ' · ' + plot.village : '');
+    diagnosisPlot.append(option);
+
+    const card = document.createElement('article');
+    card.className = 'plot-card';
+    const top = document.createElement('div');
+    top.className = 'plot-top';
+    const info = document.createElement('div');
+    const title = document.createElement('h3');
+    title.textContent = plot.name;
+    const place = document.createElement('div');
+    place.className = 'plot-location';
+    place.textContent = plot.village || 'Locality not added';
+    info.append(title, place);
+    const remove = document.createElement('button');
+    remove.type = 'button';
+    remove.className = 'icon-btn';
+    remove.setAttribute('aria-label', 'Remove ' + plot.name);
+    remove.title = 'Remove land';
+    remove.textContent = '×';
+    remove.addEventListener('click', () => deletePlot(plot.id));
+    top.append(info, remove);
+
+    const chips = document.createElement('div');
+    chips.className = 'plot-meta';
+    const area = document.createElement('span');
+    area.className = 'chip';
+    area.textContent = plot.area ? plot.area + ' acres' : 'Area not added';
+    const pin = document.createElement('span');
+    pin.className = 'chip';
+    pin.textContent = 'GPS pin saved';
+    chips.append(area, pin);
+
+    const coords = document.createElement('div');
+    coords.className = 'coordinates';
+    coords.textContent = safeCoordinate(plot.latitude, 6) + ', ' + safeCoordinate(plot.longitude, 6)
+      + (plot.accuracy !== null && plot.accuracy !== undefined && Number.isFinite(Number(plot.accuracy))
+        ? ' · GPS accuracy about ' + Math.round(Number(plot.accuracy)) + ' m' : '');
+    if (plot.lastCheck) {
+      const lastCheck = document.createElement('div');
+      lastCheck.className = 'last-check';
+      lastCheck.textContent = 'Last photo check: ' + plot.lastCheck.label + ' · '
+        + new Date(plot.lastCheck.checkedAt).toLocaleString();
+      coords.append(lastCheck);
+    }
+    const footer = document.createElement('div');
+    footer.className = 'plot-footer';
+    const map = document.createElement('a');
+    map.className = 'map-link';
+    map.href = 'https://www.openstreetmap.org/?mlat=' + encodeURIComponent(plot.latitude)
+      + '&mlon=' + encodeURIComponent(plot.longitude) + '#map=17/'
+      + encodeURIComponent(plot.latitude) + '/' + encodeURIComponent(plot.longitude);
+    map.target = '_blank';
+    map.rel = 'noopener noreferrer';
+    map.textContent = 'Open pin on map ↗';
+    const inspect = document.createElement('button');
+    inspect.type = 'button';
+    inspect.className = 'btn secondary';
+    inspect.textContent = 'Check this land';
+    inspect.addEventListener('click', () => {
+      diagnosisPlot.value = plot.id;
+      localStorage.setItem(activePlotStorageKey, plot.id);
+      location.hash = 'diagnose';
+    });
+    footer.append(map, inspect);
+    card.append(top, chips, coords, footer);
+    plotsDiv.append(card);
+  });
+
+  if (plots.some((plot) => plot.id === activeId)) diagnosisPlot.value = activeId;
+  if (plots.length === 1 && !activeId) diagnosisPlot.value = plots[0].id;
+}
+
+async function deletePlot(id) {
+  const plot = readPlots().find((item) => item.id === id);
+  if (!plot || !confirm('Remove "' + plot.name + '" and its saved location?')) return;
+  try {
+    const response = await apiFetch('/api/lands/' + encodeURIComponent(id), { method: 'DELETE' });
+    if (!response.ok) throw new Error(await problemText(response));
+    if (localStorage.getItem(activePlotStorageKey) === id) localStorage.removeItem(activePlotStorageKey);
+    await loadLands();
+    loadRisk();
+  } catch (error) {
+    plotError.textContent = 'Could not remove this land: ' + error.message;
+  }
+}
+
+$('showLandForm').addEventListener('click', () => {
+  landForm.hidden = !landForm.hidden;
+  if (!landForm.hidden) {
+    formError.textContent = '';
+    $('landName').focus();
+  }
+});
+
+$('cancelLand').addEventListener('click', () => {
+  landForm.reset();
+  delete landForm.dataset.accuracy;
+  landForm.hidden = true;
+  formError.textContent = '';
+  locationStatus.textContent = 'Visit each plot and capture its pin separately.';
+});
+
+$('useLocation').addEventListener('click', () => {
+  if (!navigator.geolocation) {
+    locationStatus.textContent = 'This browser does not provide GPS location.';
+    formError.textContent = 'Enter the latitude and longitude manually, or use a browser with location support.';
+    return;
+  }
+  const button = $('useLocation');
+  button.disabled = true;
+  delete landForm.dataset.accuracy;
+  locationStatus.textContent = 'Waiting for location permission…';
+  formError.textContent = '';
+  navigator.geolocation.getCurrentPosition((position) => {
+    landLatitude.value = position.coords.latitude.toFixed(6);
+    landLongitude.value = position.coords.longitude.toFixed(6);
+    locationStatus.textContent = 'Pin captured at this plot · estimated accuracy '
+      + Math.round(position.coords.accuracy) + ' m.';
+    landForm.dataset.accuracy = String(position.coords.accuracy);
+    button.disabled = false;
+  }, (error) => {
+    const messages = {
+      1: 'Location permission was denied. Allow location access or enter coordinates manually.',
+      2: 'The device could not determine its location. Try again outdoors or enter coordinates manually.',
+      3: 'Location request timed out. Try again or enter coordinates manually.'
+    };
+    locationStatus.textContent = messages[error.code] || 'Could not get this land’s location.';
+    formError.textContent = locationStatus.textContent;
+    button.disabled = false;
+  }, { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 });
+});
+
+landForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  formError.textContent = '';
+  const name = $('landName').value.trim();
+  const latitude = Number(landLatitude.value);
+  const longitude = Number(landLongitude.value);
+  const areaValue = $('landArea').value.trim();
+  const area = areaValue ? Number(areaValue) : null;
+  if (!name) {
+    formError.textContent = 'Enter a name for this land.';
+    return;
+  }
+  if (!Number.isFinite(latitude) || latitude < -90 || latitude > 90
+      || !Number.isFinite(longitude) || longitude < -180 || longitude > 180) {
+    formError.textContent = 'Enter a valid latitude and longitude for this land.';
+    return;
+  }
+  if (areaValue && (!Number.isFinite(area) || area <= 0 || area > 100000)) {
+    formError.textContent = 'Enter a valid land area greater than 0 acres.';
+    return;
+  }
+  try {
+    const response = await apiFetch('/api/lands', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name, village: $('landVillage').value.trim() || null, areaAcres: area,
+        latitude, longitude, accuracyMeters: Number(landForm.dataset.accuracy) || null
+      })
+    });
+    if (!response.ok) throw new Error(await problemText(response));
+    const saved = await response.json();
+    localStorage.setItem(activePlotStorageKey, String(saved.id));
+    plotError.textContent = '';
+    await loadLands();
+    loadRisk();
+    setTimeout(checkNewAlerts, 8000);
+  } catch (error) {
+    formError.textContent = 'Could not save this land: ' + error.message;
+    return;
+  }
+  landForm.reset();
+  delete landForm.dataset.accuracy;
+  landForm.hidden = true;
+  locationStatus.textContent = 'Visit each plot and capture its pin separately.';
+});
+
+diagnosisPlot.addEventListener('change', () => {
+  const id = diagnosisPlot.value;
+  try {
+    if (id) localStorage.setItem(activePlotStorageKey, id);
+    else localStorage.removeItem(activePlotStorageKey);
+  } catch (error) {
+    errorBox.textContent = 'Could not remember the selected land in this browser. ' + error.message;
+  }
+});
+
+fileInput.addEventListener('change', () => {
+  const file = fileInput.files && fileInput.files[0];
+  goBtn.disabled = !file;
+  errorBox.textContent = '';
+  if (selectedFileUrl) URL.revokeObjectURL(selectedFileUrl);
+  selectedFileUrl = null;
+  if (file) {
+    selectedFileUrl = URL.createObjectURL(file);
+    preview.src = selectedFileUrl;
+    preview.style.display = 'block';
+  } else {
+    preview.removeAttribute('src');
+    preview.style.display = 'none';
+  }
+});
+
+goBtn.addEventListener('click', async () => {
+  const file = fileInput.files && fileInput.files[0];
+  const plot = readPlots().find((item) => item.id === diagnosisPlot.value);
+  if (!file) return;
+  if (!plot) {
+    errorBox.textContent = 'Choose a saved land before checking its palm.';
+    return;
+  }
+  goBtn.disabled = true;
+  goBtn.textContent = 'Checking photo…';
+  errorBox.textContent = '';
+  try {
+    const body = new FormData();
+    body.append('file', file);
+    body.append('landId', plot.id);
+    const response = await apiFetch('/api/diagnose', { method: 'POST', body });
+    if (!response.ok) throw new Error(await problemText(response));
+    const result = await response.json();
+    renderResult(result, plot);
+    await loadHistory();
+  } catch (error) {
+    errorBox.textContent = 'Could not analyze the photo: ' + error.message;
+  } finally {
+    goBtn.disabled = !fileInput.files || !fileInput.files[0];
+    goBtn.textContent = 'Check this photo';
+  }
+});
+
+function renderResult(result, plot) {
+  resultDiv.replaceChildren();
+  resultDiv.hidden = false;
+  resultEmpty.hidden = true;
+  const summary = document.createElement('div');
+  summary.className = 'summary';
+  const badge = document.createElement('span');
+  badge.className = 'badge unknown';
+  const title = document.createElement('div');
+  title.className = 'big';
+  const detail = document.createElement('div');
+  detail.className = 'sub';
+  const top = Array.isArray(result.top5) ? result.top5 : [];
+  const notCoconut = result.riskLevel === 'NOT COCONUT';
+
+  if (notCoconut) {
+    badge.textContent = 'NOT A COCONUT PHOTO';
+    title.textContent = 'This photo may not show a coconut palm.';
+    detail.textContent = 'Try again with one coconut leaf, bud, or stem filling the frame.';
+  } else if (result.riskLevel === 'UNKNOWN') {
+    badge.textContent = 'NOT SURE';
+    title.textContent = 'The photo model is not confident.';
+    detail.textContent = 'Take a clearer close-up in daylight, or ask an agricultural officer to inspect the palm.';
+  } else {
+    const severity = result.riskLevel === 'HIGH RISK' ? 'high'
+      : result.riskLevel === 'AT RISK' ? 'risk'
+      : result.riskLevel === 'SAFE' ? 'safe' : 'unknown';
+    badge.className = 'badge ' + severity;
+    badge.textContent = result.riskLevel === 'NOT AVAILABLE' ? 'SAFETY SCORE NOT AVAILABLE' : result.riskLevel;
+    title.textContent = result.disease ? prettyLabel(result.disease)
+      : top.length ? prettyLabel(top[0].label) : 'No condition result available';
+    detail.textContent = 'Model confidence ' + (Number(result.confidence || 0) * 100).toFixed(1) + '%';
+    if (Number(result.safety) >= 0) detail.textContent += ' · model safety score ' + Number(result.safety).toFixed(0) + '%';
+  }
+  const land = document.createElement('div');
+  land.className = 'sub';
+  land.textContent = 'Land checked: ' + plot.name + (plot.village ? ' · ' + plot.village : '');
+  summary.append(badge, title, detail, land);
+  resultDiv.append(summary);
+
+  const advice = document.createElement('div');
+  advice.className = 'advice';
+  advice.textContent = 'A photo prediction is not a confirmed diagnosis. Inspect the whole palm and confirm with a local agricultural officer before treatment.';
+  resultDiv.append(advice);
+  if (top.length) {
+    const heading = document.createElement('p');
+    heading.className = 'sub';
+    heading.textContent = 'Other possible model matches';
+    resultDiv.append(heading);
+    top.slice(0, 5).forEach((prediction) => {
+      const row = document.createElement('div');
+      row.className = 'row';
+      const rowTop = document.createElement('div');
+      rowTop.className = 'top';
+      const name = document.createElement('strong');
+      name.textContent = prettyLabel(prediction.label);
+      const value = document.createElement('span');
+      value.textContent = (Number(prediction.confidence) * 100).toFixed(1) + '%';
+      rowTop.append(name, value);
+      const bar = document.createElement('div');
+      bar.className = 'bar';
+      const fill = document.createElement('span');
+      if (Number(prediction.confidence) < .1) fill.className = 'low';
+      fill.style.width = Math.min(100, Math.max(0, Number(prediction.confidence) * 100)) + '%';
+      bar.append(fill);
+      row.append(rowTop, bar);
+      resultDiv.append(row);
+    });
+  }
+}
+
+async function loadHistory() {
+  try {
+    const response = await apiFetch('/api/diagnoses');
+    if (!response.ok) throw new Error(await problemText(response));
+    const rows = await response.json();
+    $('checkCount').textContent = String(rows.length);
+    lastCheckByLand = {};
+    rows.forEach((r) => {
+      if (r.landId != null && !lastCheckByLand[String(r.landId)]) {
+        lastCheckByLand[String(r.landId)] = {
+          label: r.topLabel === 'NotCoconut' ? 'Not a coconut photo' : prettyLabel(r.topLabel),
+          checkedAt: r.createdAt
+        };
+      }
+    });
+    plotsData = plotsData.map((p) => ({ ...p, lastCheck: lastCheckByLand[p.id] || null }));
+    renderPlots();
+    if (rows.length === 0) {
+      historyDiv.textContent = 'No photo checks yet.';
+      historyDiv.className = 'empty-state';
+      return;
+    }
+    const table = document.createElement('table');
+    const header = table.insertRow();
+    ['When', 'Photo', 'Top result', 'Confidence'].forEach((text) => {
+      const cell = document.createElement('th');
+      cell.textContent = text;
+      header.append(cell);
+    });
+    rows.forEach((row) => {
+      const tr = table.insertRow();
+      [new Date(row.createdAt).toLocaleString(), row.imageName, prettyLabel(row.topLabel),
+        (Number(row.confidence) * 100).toFixed(1) + '%'].forEach((text) => {
+        tr.insertCell().textContent = text;
+      });
+    });
+    historyDiv.className = '';
+    historyDiv.replaceChildren(table);
+  } catch (error) {
+    historyDiv.textContent = 'Could not load photo check history.';
+    historyDiv.className = 'empty-state';
+    $('historyError').textContent = error.message;
+  }
+}
+
+const alertsDiv = $('alerts');
+const levelText = { WARNING: 'High risk', WATCH: 'Watch', NONE: 'Low risk' };
+
+function renderRisk(list) {
+  alertsDiv.replaceChildren();
+  if (!list.length) {
+    const empty = document.createElement('div');
+    empty.className = 'empty-state';
+    empty.style.gridColumn = '1 / -1';
+    empty.textContent = 'Add a land to see weather risk for it.';
+    alertsDiv.append(empty);
+    return;
+  }
+  list.forEach((r) => {
+    const card = document.createElement('article');
+    card.className = 'alert ' + (r.level || 'NONE');
+    const head = document.createElement('div');
+    head.className = 'head';
+    const site = document.createElement('span');
+    site.className = 'site';
+    site.textContent = (r.kind === 'home' ? 'Home · ' : '') + r.name;
+    head.append(site);
+    if (r.level) {
+      const badge = document.createElement('span');
+      badge.className = 'badge ' + r.level.toLowerCase();
+      badge.textContent = levelText[r.level] || r.level;
+      head.append(badge);
+    }
+    const line = document.createElement('div');
+    line.className = 'sub';
+    const why = document.createElement('div');
+    why.className = 'why';
+    if (r.error) {
+      line.textContent = r.error;
+    } else {
+      line.textContent = 'Forecast risk ' + Number(r.predictedRisk).toFixed(2) + ' for ' + r.predictedFor;
+      why.textContent = 'Pin: ' + Number(r.latitude).toFixed(4) + ', ' + Number(r.longitude).toFixed(4)
+        + ' · risk score today ' + Number(r.riskToday).toFixed(2);
+    }
+    card.append(head, line, why);
+    if (r.outlook && r.outlook.length) {
+      const row = document.createElement('div');
+      row.className = 'plot-meta';
+      row.style.marginTop = '8px';
+      r.outlook.forEach((o) => {
+        const chip = document.createElement('span');
+        chip.className = 'chip';
+        chip.textContent = o.days + ' days: ' + Number(o.predictedRisk).toFixed(2);
+        chip.title = 'Predicted risk for ' + o.predictedFor;
+        row.append(chip);
+      });
+      card.append(row);
+    }
+    alertsDiv.append(card);
+  });
+}
+
+async function loadMyAlerts() {
+  $('myAlertError').textContent = '';
+  try {
+    const response = await apiFetch('/api/alerts/mine');
+    if (!response.ok) throw new Error(await problemText(response));
+    const list = await response.json();
+    const box = $('myAlertList');
+    box.replaceChildren();
+    const unread = list.filter((a) => !a.readAt).length;
+    $('unreadBadge').hidden = unread === 0;
+    $('unreadBadge').textContent = unread + ' new';
+    if (!list.length) {
+      const empty = document.createElement('div');
+      empty.className = 'empty-state';
+      empty.style.gridColumn = '1 / -1';
+      empty.textContent = 'No alerts. We will warn you here when weather risk is high.';
+      box.append(empty);
+      return;
+    }
+    list.forEach((a) => {
+      const card = document.createElement('article');
+      card.className = 'alert ' + a.level;
+      const head = document.createElement('div');
+      head.className = 'head';
+      const name = document.createElement('span');
+      name.className = 'site';
+      name.textContent = a.placeName;
+      const badge = document.createElement('span');
+      badge.className = 'badge ' + a.level.toLowerCase();
+      badge.textContent = a.level === 'WARNING' ? 'High risk' : 'Watch';
+      head.append(name, badge);
+      const line = document.createElement('div');
+      line.className = 'sub';
+      line.textContent = 'Forecast risk ' + Number(a.predictedRisk).toFixed(2) + ' for ' + a.forecastFor;
+      const why = document.createElement('div');
+      why.className = 'why';
+      why.textContent = a.reason;
+      card.append(head, line, why);
+      if (!a.readAt) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'btn secondary';
+        button.style.marginTop = '8px';
+        button.textContent = 'Mark as read';
+        button.addEventListener('click', async () => {
+          button.disabled = true;
+          try {
+            const r = await apiFetch('/api/alerts/' + encodeURIComponent(a.id) + '/read', { method: 'POST' });
+            if (!r.ok) throw new Error(await problemText(r));
+            await loadMyAlerts();
+          } catch (error) {
+            button.disabled = false;
+            $('myAlertError').textContent = 'Could not mark as read: ' + error.message;
+          }
+        });
+        card.append(button);
+      }
+      box.append(card);
+    });
+  } catch (error) {
+    $('myAlertError').textContent = 'Could not load alerts: ' + error.message;
+  }
+}
+
+async function loadRisk() {
+  $('alertError').textContent = '';
+  alertsDiv.className = 'alert-list';
+  const loading = document.createElement('div');
+  loading.className = 'empty-state';
+  loading.style.gridColumn = '1 / -1';
+  loading.textContent = 'Loading weather for your places…';
+  alertsDiv.replaceChildren(loading);
+  try {
+    const response = await apiFetch('/api/risk/mine');
+    if (!response.ok) throw new Error(await problemText(response));
+    renderRisk(await response.json());
+  } catch (error) {
+    alertsDiv.replaceChildren();
+    $('alertError').textContent = 'Could not load weather risk: ' + error.message;
+  }
+}
+
+$('refreshAlerts').addEventListener('click', async () => {
+  const button = $('refreshAlerts');
+  button.disabled = true;
+  try { await loadRisk(); } finally { button.disabled = false; }
+});
+
+$('clearHistory').addEventListener('click', async () => {
+  if (!confirm('Delete the whole photo check history? This cannot be undone.')) return;
+  const button = $('clearHistory');
+  button.disabled = true;
+  $('historyError').textContent = '';
+  try {
+    const response = await apiFetch('/api/diagnoses', { method: 'DELETE' });
+    if (!response.ok) throw new Error(await problemText(response));
+    await loadHistory();
+  } catch (error) {
+    $('historyError').textContent = 'Could not clear history: ' + error.message;
+  } finally {
+    button.disabled = false;
+  }
+});
+
+let registering = false;
+let homeLocation = null;
+let officerSignup = false;
+
+fetch('/api/auth/options').then((r) => r.json()).then((o) => { officerSignup = !!o.officerSignup; }).catch(() => {});
+
+function placeNameFrom(address) {
+  if (!address) return '';
+  const area = address.village || address.town || address.city || address.suburb
+    || address.hamlet || address.county || address.state_district || '';
+  const region = address.state || '';
+  return [area, region].filter(Boolean).join(', ').slice(0, 80);
+}
+
+// Turns coordinates into a readable place. If this fails the coordinates are still kept.
+async function lookupPlace(latitude, longitude) {
+  const url = 'https://nominatim.openstreetmap.org/reverse?format=jsonv2&zoom=12&addressdetails=1'
+    + '&lat=' + encodeURIComponent(latitude) + '&lon=' + encodeURIComponent(longitude);
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 8000);
+  try {
+    const response = await fetch(url, { signal: controller.signal, headers: { 'Accept-Language': 'en' } });
+    if (!response.ok) throw new Error('lookup ' + response.status);
+    return placeNameFrom((await response.json()).address);
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+$('authUseLocation').addEventListener('click', () => {
+  const status = $('authLocStatus');
+  if (!navigator.geolocation) {
+    status.textContent = 'This browser cannot provide your location. Enter it by hand below.';
+    $('manualLoc').hidden = false;
+    return;
+  }
+  const button = $('authUseLocation');
+  button.disabled = true;
+  status.textContent = 'Waiting for location permission…';
+  navigator.geolocation.getCurrentPosition(async (position) => {
+    $('manualLoc').hidden = true;
+    homeLocation = { latitude: Number(position.coords.latitude.toFixed(6)), longitude: Number(position.coords.longitude.toFixed(6)) };
+    status.textContent = 'Location captured (accurate to about ' + Math.round(position.coords.accuracy) + ' m). Finding the place name…';
+    try {
+      const place = await lookupPlace(homeLocation.latitude, homeLocation.longitude);
+      if (place) $('authLocality').value = place;
+      status.textContent = place
+        ? 'Location set: ' + place + '. You can edit the name.'
+        : 'Location captured. Type your village or town name.';
+    } catch (e) {
+      status.textContent = 'Location captured, but the place name could not be found. Type your village or town name.';
+    } finally {
+      button.disabled = false;
+    }
+  }, (error) => {
+    const messages = {
+      1: 'Permission was denied. Allow location access in your browser settings and try again.',
+      2: 'Your device could not work out its location. Try again outdoors or with Wi-Fi on.',
+      3: 'Finding your location took too long. Please try again.'
+    };
+    status.textContent = (messages[error.code] || 'Could not get your location.') + ' You can enter it by hand below.';
+    $('manualLoc').hidden = false;
+    button.disabled = false;
+  }, { enableHighAccuracy: false, timeout: 30000, maximumAge: 300000 });
+});
+
+$('manUse').addEventListener('click', async () => {
+  const status = $('authLocStatus');
+  const latitude = Number($('manLat').value);
+  const longitude = Number($('manLon').value);
+  if ($('manLat').value.trim() === '' || $('manLon').value.trim() === ''
+      || !Number.isFinite(latitude) || !Number.isFinite(longitude)
+      || latitude < -90 || latitude > 90 || longitude < -180 || longitude > 180) {
+    status.textContent = 'Enter a latitude between -90 and 90 and a longitude between -180 and 180.';
+    return;
+  }
+  homeLocation = { latitude: Number(latitude.toFixed(6)), longitude: Number(longitude.toFixed(6)) };
+  status.textContent = 'Coordinates saved. Finding the place name…';
+  try {
+    const place = await lookupPlace(homeLocation.latitude, homeLocation.longitude);
+    if (place) $('authLocality').value = place;
+    status.textContent = place ? 'Location set: ' + place + '. You can edit the name.'
+      : 'Coordinates saved. Type your village or town name.';
+  } catch (e) {
+    status.textContent = 'Coordinates saved. Type your village or town name.';
+  }
+});
+
+function setAuthMode(register) {
+  registering = register;
+  $('tabLogin').classList.toggle('active', !register);
+  $('tabRegister').classList.toggle('active', register);
+  $('nameField').hidden = !register;
+  $('locationField').hidden = !register;
+  $('inviteField').hidden = !(register && officerSignup);
+  $('pwHint').hidden = !register;
+  $('authSubmit').textContent = register ? 'Create account' : 'Sign in';
+  $('authPassword').autocomplete = register ? 'new-password' : 'current-password';
+  $('authError').textContent = '';
+}
+
+let officerMap = null;
+let officerLayer = null;
+const levelColor = { WARNING: '#b64a3b', WATCH: '#dba64b', NONE: '#4b8b50' };
+
+function renderOfficer(areas) {
+  const summary = $('officerSummary');
+  summary.replaceChildren();
+  const counts = { WARNING: 0, WATCH: 0, NONE: 0 };
+  let farmers = 0;
+  areas.forEach((a) => { counts[a.level] = (counts[a.level] || 0) + 1; farmers += a.farmers; });
+  [['Areas monitored', areas.length], ['High risk', counts.WARNING], ['Watch', counts.WATCH], ['Farmers covered', farmers]]
+    .forEach(([label, value]) => {
+      const box = document.createElement('div');
+      const n = document.createElement('strong');
+      n.textContent = String(value);
+      const l = document.createElement('span');
+      l.textContent = label;
+      box.append(n, l);
+      summary.append(box);
+    });
+
+  const list = $('areaList');
+  list.replaceChildren();
+  if (!areas.length) {
+    const empty = document.createElement('div');
+    empty.className = 'empty-state';
+    empty.textContent = 'No areas yet. Areas appear after farmers register and the hourly check runs.';
+    list.append(empty);
+  }
+  areas.forEach((a) => {
+    const item = document.createElement('article');
+    item.className = 'area-item ' + a.level;
+    const head = document.createElement('div');
+    head.className = 'head';
+    const name = document.createElement('span');
+    name.className = 'site';
+    name.textContent = a.name;
+    const badge = document.createElement('span');
+    badge.className = 'badge ' + a.level.toLowerCase();
+    badge.textContent = a.level === 'WARNING' ? 'High risk' : a.level === 'WATCH' ? 'Watch' : 'Low risk';
+    head.append(name, badge);
+    const line = document.createElement('div');
+    line.className = 'sub';
+    line.textContent = 'Forecast risk ' + Number(a.predictedRisk).toFixed(2) + ' for ' + a.predictedFor;
+    const why = document.createElement('div');
+    why.className = 'why';
+    why.textContent = a.farmers + ' farmer(s) · ' + a.lands + ' land(s) · ' + a.openAlerts + ' unread alert(s) · updated '
+      + new Date(a.updatedAt).toLocaleString();
+    item.append(head, line, why);
+    list.append(item);
+  });
+
+  if (typeof L === 'undefined') {
+    $('officerMap').textContent = 'The map could not be loaded. The list on the right still shows every area.';
+    return;
+  }
+  if (!officerMap) {
+    officerMap = L.map('officerMap').setView([12.5, 76.5], 6);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18, attribution: '© OpenStreetMap contributors'
+    }).addTo(officerMap);
+    officerLayer = L.layerGroup().addTo(officerMap);
+  }
+  officerLayer.clearLayers();
+  const points = [];
+  areas.forEach((a) => {
+    const color = levelColor[a.level] || '#607d8b';
+    const marker = L.circleMarker([a.latitude, a.longitude], {
+      radius: 11, color, fillColor: color, fillOpacity: 0.7, weight: 2
+    }).addTo(officerLayer);
+    const tip = document.createElement('div');
+    const strong = document.createElement('strong');
+    strong.textContent = a.name;
+    tip.append(strong, document.createElement('br'),
+      document.createTextNode('Risk ' + Number(a.predictedRisk).toFixed(2) + ' · ' + a.farmers + ' farmer(s)'));
+    marker.bindPopup(tip);
+    points.push([a.latitude, a.longitude]);
+  });
+  setTimeout(() => {
+    officerMap.invalidateSize();
+    if (points.length) officerMap.fitBounds(points, { padding: [40, 40], maxZoom: 11 });
+  }, 50);
+}
+
+async function loadOfficer() {
+  $('officerError').textContent = '';
+  try {
+    const response = await apiFetch('/api/officer/areas');
+    if (!response.ok) throw new Error(await problemText(response));
+    renderOfficer(await response.json());
+  } catch (error) {
+    $('officerError').textContent = 'Could not load area risk: ' + error.message;
+  }
+}
+
+$('officerRefresh').addEventListener('click', async () => {
+  const button = $('officerRefresh');
+  button.disabled = true;
+  try { await loadOfficer(); } finally { button.disabled = false; }
+});
+
+let lastUnread = null;
+let alertTimer = null;
+
+function showNewAlertBanner(count) {
+  let bar = document.getElementById('newAlertBar');
+  if (!bar) {
+    bar = document.createElement('div');
+    bar.id = 'newAlertBar';
+    bar.setAttribute('role', 'alert');
+    bar.style.cssText = 'position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:50;max-width:92vw;'
+      + 'background:#883c31;color:#fff;padding:12px 18px;border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,.25);font-weight:700;cursor:pointer;';
+    bar.addEventListener('click', () => { bar.remove(); location.hash = 'myAlerts'; });
+    document.body.append(bar);
+  }
+  bar.textContent = count + ' new weather risk alert' + (count > 1 ? 's' : '') + ' for your land. Tap to view.';
+}
+
+async function checkNewAlerts() {
+  try {
+    const response = await apiFetch('/api/alerts/mine/unread-count');
+    if (!response.ok) return;
+    const unread = (await response.json()).unread;
+    if (lastUnread !== null && unread > lastUnread) {
+      showNewAlertBanner(unread - lastUnread);
+      if ('Notification' in window && Notification.permission === 'granted') {
+        new Notification('AgriCient: new coconut weather alert', { body: 'High weather risk was found at your land. Open the app for details.' });
+      }
+      loadMyAlerts();
+    }
+    lastUnread = unread;
+  } catch (e) { /* try again on the next tick */ }
+}
+
+function startAlertWatch() {
+  stopAlertWatch();
+  lastUnread = null;
+  checkNewAlerts();
+  alertTimer = setInterval(checkNewAlerts, 60000);
+  if ('Notification' in window && Notification.permission === 'default') {
+    Notification.requestPermission();
+  }
+}
+
+function stopAlertWatch() {
+  if (alertTimer) clearInterval(alertTimer);
+  alertTimer = null;
+  const bar = document.getElementById('newAlertBar');
+  if (bar) bar.remove();
+}
+
+function showApp(user) {
+  $('authSection').hidden = true;
+  const officer = user.role === 'OFFICER';
+  // a section marked with both classes is for everybody; otherwise farmer-only or officer-only
+  document.querySelectorAll('.needs-auth, .needs-officer').forEach((el) => {
+    const forFarmer = el.classList.contains('needs-auth');
+    const forOfficer = el.classList.contains('needs-officer');
+    el.hidden = officer ? !forOfficer : !forFarmer;
+  });
+  $('smsFarmerOnly').hidden = officer;
+  $('smsNote').hidden = officer;
+  $('pushTitle').hidden = officer;
+  $('pushText').textContent = officer
+    ? 'Turning this on needs your permission. Notifications arrive even when AgriCient is closed.'
+    : 'Get a notification on this device when weather risk becomes high, even if AgriCient is closed. This needs your permission.';
+  $('smsHeading').textContent = officer ? 'Phone and browser alerts' : 'Text message alerts';
+  $('smsIntro').textContent = officer
+    ? 'Get a notification on this device when an area turns high risk, even if AgriCient is closed.'
+    : 'Optional. Get one text when weather risk becomes high at your home or one of your lands.';
+  $('myAlertsIntro').textContent = officer
+    ? 'Areas that turned high risk, saved automatically. Each shows how many farmers are registered there.'
+    : 'Warnings for your home location and lands, saved automatically when weather risk is high.';
+  document.querySelectorAll('.farmer-nav').forEach((el) => { el.hidden = officer; });
+  document.querySelectorAll('.officer-nav').forEach((el) => { el.hidden = !officer; });
+  $('heroText').textContent = officer
+    ? 'See weather-based coconut disease risk across the areas where farmers are registered, and decide where to look first.'
+    : 'Register your location, save a pin for each coconut land, check palm photos, and see the weather risk at your own lands.';
+  $('userBar').hidden = false;
+  $('userName').textContent = user.name + ' · ' + (user.role === 'OFFICER' ? 'Officer' : 'Farmer');
+}
+
+function signedOut(message) {
+  stopAlertWatch();
+  localStorage.removeItem(tokenKey);
+  localStorage.removeItem(activePlotStorageKey);
+  plotsData = [];
+  lastCheckByLand = {};
+  document.querySelectorAll('.needs-auth, .needs-officer').forEach((el) => { el.hidden = true; });
+  document.querySelectorAll('.officer-nav').forEach((el) => { el.hidden = true; });
+  document.querySelectorAll('.farmer-nav').forEach((el) => { el.hidden = false; });
+  $('userBar').hidden = true;
+  $('authSection').hidden = false;
+  $('authPassword').value = '';
+  $('authError').textContent = message || '';
+}
+
+function urlBase64ToBytes(base64) {
+  const padded = base64 + '='.repeat((4 - base64.length % 4) % 4);
+  const raw = atob(padded.replace(/-/g, '+').replace(/_/g, '/'));
+  return Uint8Array.from(raw, (c) => c.charCodeAt(0));
+}
+
+function bufferToBase64Url(buffer) {
+  return btoa(String.fromCharCode(...new Uint8Array(buffer))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+async function refreshPushButton(keepMessage) {
+  const button = $('pushBtn');
+  const status = $('pushStatus');
+  if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+    button.disabled = true;
+    status.textContent = 'This browser does not support device alerts. On iPhone, add AgriCient to the Home Screen first.';
+    return;
+  }
+  try {
+    const keyResponse = await fetch('/api/push/key');
+    const key = await keyResponse.json();
+    if (!key.enabled) {
+      button.disabled = true;
+      status.textContent = 'Device alerts are not switched on for this server yet.';
+      return;
+    }
+    const reg = await navigator.serviceWorker.register('/sw.js');
+    const sub = await reg.pushManager.getSubscription();
+    button.textContent = sub ? 'Turn off alerts on this device' : 'Turn on alerts on this device';
+    button.dataset.on = sub ? '1' : '';
+    button.disabled = false;
+    if (!keepMessage) status.textContent = sub ? 'Device alerts are on.' : '';
+  } catch (e) {
+    button.disabled = true;
+    status.textContent = 'Could not set up device alerts: ' + e.message;
+  }
+}
+
+$('pushBtn').addEventListener('click', async () => {
+  const button = $('pushBtn');
+  const status = $('pushStatus');
+  button.disabled = true;
+  try {
+    const reg = await navigator.serviceWorker.ready;
+    const existing = await reg.pushManager.getSubscription();
+    if (existing) {
+      await apiFetch('/api/push/unsubscribe', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ endpoint: existing.endpoint })
+      });
+      await existing.unsubscribe();
+      status.textContent = 'Device alerts are off.';
+    } else {
+      const permission = await Notification.requestPermission();
+      if (permission !== 'granted') throw new Error('Permission was not given. Allow notifications for this site in your browser settings.');
+      const key = await (await fetch('/api/push/key')).json();
+      const sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: urlBase64ToBytes(key.publicKey) });
+      const response = await apiFetch('/api/push/subscribe', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ endpoint: sub.endpoint, p256dh: bufferToBase64Url(sub.getKey('p256dh')), auth: bufferToBase64Url(sub.getKey('auth')) })
+      });
+      if (!response.ok) { await sub.unsubscribe(); throw new Error(await problemText(response)); }
+      status.textContent = 'Device alerts are on.';
+    }
+  } catch (e) {
+    status.textContent = 'Could not change device alerts: ' + e.message;
+  } finally {
+    await refreshPushButton(true);
+  }
+});
+
+function fillSms(user) {
+  $('smsPhone').value = user.phone || '';
+  $('smsConsent').checked = !!user.smsConsent;
+  $('smsError').textContent = '';
+  $('smsStatus').textContent = '';
+}
+
+$('smsForm').addEventListener('submit', async (event) => {
+  event.preventDefault();
+  $('smsError').textContent = '';
+  $('smsStatus').textContent = '';
+  const phone = $('smsPhone').value.trim();
+  const consent = $('smsConsent').checked;
+  if (phone && !consent) {
+    $('smsError').textContent = 'Tick the box to agree to texts, or clear the number.';
+    return;
+  }
+  if (!phone && consent) {
+    $('smsError').textContent = 'Enter your mobile number to receive texts.';
+    return;
+  }
+  const button = $('smsSave');
+  button.disabled = true;
+  try {
+    const response = await apiFetch('/api/auth/sms', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ phone, consent })
+    });
+    if (!response.ok) throw new Error(await problemText(response));
+    const user = await response.json();
+    fillSms(user);
+    $('smsStatus').textContent = user.smsConsent ? 'Saved. Text alerts are on (simulated for now).' : 'Saved. Text alerts are off.';
+  } catch (error) {
+    $('smsError').textContent = 'Could not save: ' + error.message;
+  } finally {
+    button.disabled = false;
+  }
+});
+
+async function enterApp(user) {
+  showApp(user);
+  fillSms(user);
+  refreshPushButton();
+  if (user.role === 'OFFICER') {
+    loadOfficer();
+    loadMyAlerts();
+    startAlertWatch();
+    return;
+  }
+  try {
+    await loadLands();
+    await loadHistory();
+  } catch (error) {
+    plotError.textContent = 'Could not load your lands: ' + error.message;
+  }
+  loadMyAlerts();
+  loadRisk();
+  startAlertWatch();
+}
+
+$('tabLogin').addEventListener('click', () => setAuthMode(false));
+$('tabRegister').addEventListener('click', () => setAuthMode(true));
+
+$('authForm').addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const error = $('authError');
+  error.textContent = '';
+  const login = $('authLogin').value.trim();
+  const password = $('authPassword').value;
+  if (!login || !password) {
+    error.textContent = 'Enter your email or phone and password.';
+    return;
+  }
+  if (registering && !homeLocation) {
+    error.textContent = 'Please choose your location with “Use my current location”.';
+    return;
+  }
+  const button = $('authSubmit');
+  button.disabled = true;
+  try {
+    const payload = registering
+      ? { name: $('authName').value.trim(), login, password, locality: $('authLocality').value.trim(),
+          latitude: homeLocation && homeLocation.latitude, longitude: homeLocation && homeLocation.longitude,
+          inviteCode: $('authInvite').value.trim() || null }
+      : { login, password };
+    const response = await fetch(registering ? '/api/auth/register' : '/api/auth/login', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+    });
+    if (!response.ok) throw new Error(await problemText(response));
+    const data = await response.json();
+    localStorage.setItem(tokenKey, data.token);
+    $('authPassword').value = '';
+    $('authInvite').value = '';
+    await enterApp(data.user);
+  } catch (e) {
+    error.textContent = e.message;
+  } finally {
+    button.disabled = false;
+  }
+});
+
+$('logoutBtn').addEventListener('click', async () => {
+  try { await apiFetch('/api/auth/logout', { method: 'POST' }); } catch (e) { /* signing out locally anyway */ }
+  signedOut('');
+});
+
+async function start() {
+  if (!authToken()) return;
+  try {
+    const response = await fetch('/api/auth/me', { headers: { Authorization: 'Bearer ' + authToken() } });
+    if (!response.ok) throw new Error('expired');
+    await enterApp(await response.json());
+  } catch (e) {
+    signedOut('');
+  }
+}
+start();
+</script>
+</body>
+</html>
